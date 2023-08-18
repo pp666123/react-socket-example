@@ -5,6 +5,7 @@ const cors = require("cors"); // 引入 cors 模块
 
 const app = express();
 const server = http.createServer(app);
+let messageArray = [];
 
 const io = socketIo(server, {
   cors: {
@@ -24,7 +25,8 @@ io.on("connection", (socket) => {
     console.log('收到 "create-something" 事件，值為：', value);
 
     // 執行建立操作，這裡假設成功建立
-    const result = { status: "success", message: "已建立某物！" };
+    messageArray = [...messageArray, value];
+    const result = { status: "success", message: "已建立某物！", data: messageArray };
 
     // 回呼給客戶端，將建立結果傳回前端
     callback(result);
