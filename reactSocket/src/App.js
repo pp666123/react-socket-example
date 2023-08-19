@@ -4,6 +4,7 @@ import { ConnectionState } from "./components/ConnectionState";
 import { ConnectionManager } from "./components/ConnectionManager";
 import { MyForm } from "./components/MyForm";
 import { Events } from "./components/Events";
+import MyComponent from "./components/MyComponent";
 
 export default function App() {
   const [isConnected, setIsConnected] = useState(socket.connected);
@@ -19,12 +20,12 @@ export default function App() {
     }
 
     function onFooEvent(value) {
-      setFooEvents((previous) => [...previous, value]);
+      setFooEvents(value.data);
     }
 
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
-    socket.on("foo", onFooEvent);
+    socket.on("new-message", onFooEvent);
 
     return () => {
       socket.off("connect", onConnect);
