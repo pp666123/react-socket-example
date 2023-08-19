@@ -13,8 +13,18 @@ export function ConnectionManager() {
 
   return (
     <>
-      <button onClick={connect}>Connect</button>
-      <button onClick={disconnect}>Disconnect</button>
+      <button
+        className='text-white border-2 border-white rounded-md p-1 me-3'
+        onClick={connect}
+      >
+        Connect
+      </button>
+      <button
+        className='text-white border-2 border-white rounded-md p-1'
+        onClick={disconnect}
+      >
+        Disconnect
+      </button>
     </>
   );
 }

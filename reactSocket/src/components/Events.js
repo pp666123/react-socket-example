@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 export function Events({ events }) {
   return (
-    <ul>
+    <div className='border-2 border-white rounded-md m-5 text-white h-50-vh overflow-auto'>
       {events.map((event, index) => (
-        <li key={index}>{event}</li>
+        <div
+          className='p-2 ps-6'
+          key={index}
+        >
+          user ： {event}
+        </div>
       ))}
-    </ul>
+    </div>
   );
 }

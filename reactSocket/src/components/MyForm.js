@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { socket } from "../socket";
-import { io } from "socket.io-client";
 
 export function MyForm() {
   const [value, setValue] = useState("");
@@ -16,17 +15,22 @@ export function MyForm() {
   }
 
   return (
-    <>
-      <form onSubmit={onSubmit}>
-        <input onChange={(e) => setValue(e.target.value)} />
+    <form
+      className='ms-3'
+      onSubmit={onSubmit}
+    >
+      <input
+        className='me-3 border-2 border-white rounded-md p-1 w-96'
+        onChange={(e) => setValue(e.target.value)}
+      />
 
-        <button
-          type='submit'
-          disabled={isLoading}
-        >
-          Submit
-        </button>
-      </form>
-    </>
+      <button
+        className='text-white border-2 border-white rounded-md p-1'
+        type='submit'
+        disabled={isLoading}
+      >
+        Submit
+      </button>
+    </form>
   );
 }
