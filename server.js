@@ -27,8 +27,11 @@ io.on("connection", (socket) => {
     messageArray = [...messageArray, value];
     const result = { status: "success", message: "已建立某物！", data: messageArray };
 
-    //發送給客戶端監聽"new-message" 事件
+    //發送給emit客戶端監聽"new-message" 事件
     socket.emit("new-message", result);
+
+    //發送給"除"emit以外"所有"客戶端監聽"new-message" 事件
+    socket.broadcast.emit("new-message", result);
 
     // 回呼給客戶端，將建立結果傳回前端
     callback(result);

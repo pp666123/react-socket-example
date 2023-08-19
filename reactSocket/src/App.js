@@ -20,6 +20,7 @@ export default function App() {
     }
 
     function onFooEvent(value) {
+      console.log("收到new-message事件消息");
       setFooEvents(value.data);
     }
 
@@ -28,9 +29,9 @@ export default function App() {
     socket.on("new-message", onFooEvent);
 
     return () => {
-      socket.off("connect", onConnect);
-      socket.off("disconnect", onDisconnect);
-      socket.off("foo", onFooEvent);
+      // socket.off("connect", onConnect);
+      // socket.off("disconnect", onDisconnect);
+      // socket.off("new-message", onFooEvent);
     };
   }, []);
 
