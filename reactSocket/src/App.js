@@ -56,9 +56,11 @@ export default function App() {
         onlineCount={onlineCount}
       />
       <Events events={fooEvents} />
-      <div className='m-5 flex'>
-        <ConnectionManager />
-        <div className='flex w-full justify-end'>
+      <div className='w-full p-5 flex md:justify-between'>
+        <div className='w-2/5'>
+          <ConnectionManager />
+        </div>
+        <div className='flex w-3/5'>
           <MyForm />
         </div>
       </div>

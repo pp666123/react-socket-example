@@ -6,6 +6,7 @@ export function MyForm() {
   const [isLoading, setIsLoading] = useState(false);
 
   function onSubmit(event) {
+    setValue("");
     event.preventDefault();
     setIsLoading(true);
 
@@ -16,16 +17,17 @@ export function MyForm() {
 
   return (
     <form
-      className='ms-3'
+      className='ms-3 w-full flex justify-end'
       onSubmit={onSubmit}
     >
       <input
-        className='me-3 border-2 border-white rounded-md p-1 w-96'
+        className='pe-3 border-2 border-white rounded-md p-1 w-3/4 me-3'
         onChange={(e) => setValue(e.target.value)}
+        value={value}
       />
 
       <button
-        className='text-white border-2 border-white rounded-md p-1'
+        className='text-white border-2 border-white rounded-md p-1 w-1/3 md:w-1/5 hover:bg-white hover:text-black'
         type='submit'
         disabled={isLoading}
       >
