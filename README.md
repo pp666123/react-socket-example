@@ -1,5 +1,5 @@
 # react-socket-example
-refer to https://socket.io/how-to/use-with-react and https://chat.openai.com/
+refer to https://socket.io/how-to/use-with-react and https://chat.openai.com/ \
 功能：統計在線人數、即時聊天、RWD
 
 # 啟動伺服器端
