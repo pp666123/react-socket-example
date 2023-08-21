@@ -8,7 +8,7 @@ export function Events({ events }) {
           className='p-2 ps-6'
           key={index}
         >
-          user ： {event}
+          {event}
         </div>
       ))}
     </div>

@@ -15,18 +15,19 @@ const io = socketIo(server, {
 
 let messageArray = [];
 let onlineMember = [];
+
 io.on("connection", (socket) => {
   console.log("有一個使用者連線");
   // ****************************************
   // ****************************************
   // 訊息傳遞
   // 監聽來自客戶端的 "sent-message" 事件
-  socket.on("sent-message", (value, callback) => {
-    console.log('收到 "sent-message" 事件，值為：', value);
+  socket.on("sent-message", (obj, callback) => {
+    console.log('收到 "sent-message" 事件，值為：', obj);
 
     // 儲存message
-    messageArray = [...messageArray, value];
-    const result = { status: "success", message: "已建立某物！", data: messageArray };
+    messageArray = [...messageArray, `${obj.username}: ${obj.message}`];
+    const result = { status: "success", message: "已新增訊息！", data: messageArray };
 
     // 發送給emit客戶端監聽"new-message" 事件
     socket.emit("new-message", result);
@@ -43,29 +44,27 @@ io.on("connection", (socket) => {
   // ****************************************
   // ****************************************
   // 統計在線人數
-  //上線
-  socket.on("connect-count", (value) => {
+  // 上線
+  socket.on("connect-count", (value, callback) => {
     console.log('收到 "connect-count" 事件，值為：', value);
+    console.log(onlineMember.includes(value));
 
-    // 統計人數
-    onlineMember = [...onlineMember, value];
-
-    // 傳送至user端
-    socket.emit("online-count", onlineMember.length);
-    socket.broadcast.emit("online-count", onlineMember.length);
+    // 統計人數 && 暱稱設定
+    if (!onlineMember.includes(value)) {
+      onlineMember = [...onlineMember, value];
+      const result = { success: true, message: "已建立username！", data: onlineMember.length, username: value };
+      // 傳送至user端
+      socket.emit("online-count", result);
+      socket.broadcast.emit("online-count", result);
+      callback(result);
+    } else {
+      const result = { success: false, message: "username重複，建立失敗！", data: false, username: false };
+      // 傳送至user端
+      callback(result);
+    }
     console.log(onlineMember);
   });
   // 下線
-  // socket.on("disconnect", () => {
-  //   console.log('收到 "disconnect-count" 事件');
-
-  //   // 統計人數
-  //   onlineMember = onlineMember.slice(1);
-
-  //   // 傳送至user端
-  //   socket.emit("online-count", onlineMember.length);
-  //   socket.broadcast.emit("online-count", onlineMember.length);
-  // });
   socket.on("disconnect", () => {
     console.log("使用者斷線");
     onlineMember = onlineMember.slice(1);
@@ -74,9 +73,19 @@ io.on("connection", (socket) => {
     console.log(onlineMember);
     console.log(onlineMember.length);
   });
+  // ****************************************
+  // ****************************************
+
+  // ****************************************
+  // ****************************************
+  // user name
+  // 檢查是否重複
+  // =>是，回傳unsuccess
+  // =>否，新增{id:1, name:xxx}回傳success & 之前所有訊息
+
+  // ****************************************
+  // ****************************************
 });
-// ****************************************
-// ****************************************
 
 // ...其他设置和路由
 server.listen(3001, () => {

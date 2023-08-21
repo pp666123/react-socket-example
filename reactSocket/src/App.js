@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { socket } from "./socket";
 import { ConnectionState } from "./components/ConnectionState";
 import { ConnectionManager } from "./components/ConnectionManager";
@@ -7,7 +7,7 @@ import { Events } from "./components/Events";
 
 export default function App() {
   const [isConnected, setIsConnected] = useState(socket.connected);
-  const [fooEvents, setFooEvents] = useState([]);
+  const [MessageEvents, setMessageEvents] = useState([]);
   const [onlineCount, setOnlineCount] = useState(0);
 
   useEffect(() => {
@@ -21,12 +21,12 @@ export default function App() {
 
     function onNewMessageEvent(value) {
       console.log("收到new-message事件消息");
-      setFooEvents(value.data);
+      setMessageEvents(value.data);
     }
 
     function onOnlineCountEvent(value) {
-      console.log("在線人數:" + value);
-      setOnlineCount(value);
+      console.log("在線人數:" + value.data);
+      setOnlineCount(value.data);
     }
 
     socket.on("connect", onConnect);
@@ -41,21 +41,13 @@ export default function App() {
     };
   }, []);
 
-  useEffect(() => {
-    console.log("傳送使用者名稱");
-    socket.emit("connect-count", "monnkkey");
-    return () => {
-      socket.off("connect-count");
-    };
-  }, []);
-
   return (
     <div className='App bg-black pb-5 flex flex-col justify-center min-h-screen'>
       <ConnectionState
         isConnected={isConnected}
         onlineCount={onlineCount}
       />
-      <Events events={fooEvents} />
+      <Events events={MessageEvents} />
       <div className='w-full p-5 flex md:justify-between'>
         <div className='w-2/5'>
           <ConnectionManager />
