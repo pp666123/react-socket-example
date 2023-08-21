@@ -7,8 +7,8 @@ react-socket-example> node server.js
 #啟動react\
 react-socket-example/socket-react> npm start
 
-#使用react socket.io-client
+#使用react socket.io-client\
 https://socket.io/
 
-#使用tailwindcss
+#使用tailwindcss\
 https://tailwindcss.com/docs/background-color
