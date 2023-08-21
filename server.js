@@ -57,6 +57,9 @@ io.on("connection", (socket) => {
       socket.emit("online-count", result);
       socket.broadcast.emit("online-count", result);
       callback(result);
+      // 傳送訊息
+      const messageResult = { status: "success", message: "已新增訊息！", data: messageArray };
+      socket.emit("new-message", messageResult);
     } else {
       const result = { success: false, message: "username重複，建立失敗！", data: false, username: false };
       // 傳送至user端
