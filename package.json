@@ -6,9 +6,10 @@
   "scripts": {
     "server": "node server.js",
     "client": "npm start --prefix reactSocket",
-    "buildfront": "npm run build --prefix reactSocket",
+    "build:front": "npm run build --prefix reactSocket",
+    "build:back": "npm run build",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "build": "concurrently \"npm run buildfront\"",
+    "build": "concurrently \"npm run build:front\" \"npm run build:server\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
