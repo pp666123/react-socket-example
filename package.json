@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "server": "node server.js",
+    "client": "npm start --prefix reactSocket",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "concurrently": "^8.2.1",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "socket.io": "^4.7.2",
